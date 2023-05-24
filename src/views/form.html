@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Evento</title>
+    <link rel="stylesheet" href="./css/global.css">
+    <link rel="stylesheet" href="./css/partials/header.css">
+    <link rel="stylesheet" href="./css/partials/forms.css">
+    <link rel="stylesheet" href="./css/partials/pageForm.css">
+
+    <style>
+        /* MODAL =================================== */
+        .modal-overlay {
+            width: 100%;
+            height: 100%;
+
+            background-color: #26569F;
+            color: #f0f2f5;
+            position: fixed;
+            top: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            opacity: 0;
+            visibility: hidden;
+
+            z-index: 999;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            padding: 2.4rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+
+            background-image: url(./img/Background.svg);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            width: 100%;
+            height: 100vh;
+        }
+
+        .modal img {
+            width: 70px;
+            margin: 0 auto;
+        }
+
+        .modal h1 {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .modal p {
+            margin-top: 20px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: lighter;
+        }
+
+        .modal a {
+            width: 250px;
+            height: 5.6rem;
+            background: var(--btn-color);
+            color: var(--white-text);
+            border: 0;
+            border-radius: .8rem;
+            cursor: pointer;
+            font: 700 1.6rem Roboto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+            margin-top: 3.2rem;
+        }
+
+        .modal a:hover {
+            background: var(--btn-colorh);
+        }
+    </style>
+
+
+</head>
+
+<body id="pageForm">
+    <!-- Plugin Libras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <!-- Plugin Libras -->
+
+    <div id="container">
+        <header class="page-header">
+            <div class="col">
+                <div class="top-bar-container">
+                    <a href="/">
+                        <img src="./img/Voltar.svg" alt="Voltar">
+                    </a>
+                    <img src="./img/Eventec.svg" alt="Logo">
+                </div>
+            </div>
+
+            <div class="header-content">
+                <strong>Que incrível que você quer cadastrar seu evento</strong>
+            </div>
+        </header>
+
+        <main>
+            <!-- formulario -->
+            <form action="" id="create-form">
+                <fieldset>
+                    <legend>Dados do evento:</legend>
+
+                    <!-- titulo -->
+                    <div class="input-block">
+                        <label for="title">Título</label>
+                        <input name="title" id="title" required>
+                    </div>
+
+                    <!-- link foto -->
+                    <div class="input-block">
+                        <label for="avatar">Link da sua foto <small>(comece com //http)</small></label>
+                        <input name="avatar" id="avatar" type="url" required>
+                    </div>
+
+                    <!-- Descricao -->
+                    <div class="textarea-block">
+                        <label for="desc">Descrição</label>
+                        <textarea name="desc" id="desc" required></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Categoria</legend>
+                    <div class="select-block">
+                        <label for="subject">Tema</label>
+                        <select name="subject" id="subject">
+                            <option value="">Selecione uma opção</option>
+                            <option value="1">Tecnologia</option>
+                            <option value="2">Educação e Empreendedorismo</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset id="schedule-items">
+                    <legend>Data e Hora</legend>
+                    <div class="schedule-item">
+                        <div class="select-block">
+                            <label for="date">Data</label>
+                            <input id="date" name="date" type="date" value="">
+                        </div>
+                        <div class="input-block">
+                            <label for="time-from">Das</label>
+                            <input type="time" id="time-from" name="time-from" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="time-to">Até</label>
+                            <input type="time" id="time-to" name="time-to" required>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <footer>
+                <p>
+                    <img src="./img/Atenção.svg" alt="Atenção">
+                    Importante!<br>Preencha todos os dados
+                </p>
+                <button onclick="Modal.open()" class="button new" type="submit" form="create-form">Salvar cadastro
+                </button>
+            </footer>
+        </main>
+    </div>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <img src="./img/Feito.svg" alt="">
+            <h1>Cadastro Salvo!</h1>
+            <p>Todo certo, seu cadastro foi salvo.</p>
+            <a href="/">Voltar para página inicial</a>
+        </div>
+    </div>
+
+    <script src="./scripts/main.js"></script>
+    <script>
+        const Modal = {
+            open() {
+                document
+                    .querySelector('.modal-overlay')
+                    .classList
+                    .add('active')
+            },
+            close() {
+                document
+                    .querySelector('.modal-overlay')
+                    .classList
+                    .remove('active')
+            }
+        }
+    </script>
+
+</body>
+
+</html>
